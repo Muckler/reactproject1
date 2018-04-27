@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Projects from './components/Projects'
-import AddProjects from './components/AddProjects'
+import Todos from './components/Todos'
+import Addtodo from './components/Addtodo'
 import './App.css';
 
 class App extends Component {
@@ -8,36 +8,25 @@ class App extends Component {
   constructor(){
     super();
     this.state = {
-      projects: []
+      todos: []
     }
   }
 
   componentWillMount(){
-
-    this.setState({projects:[
-      {
-        title: "Digital Crafts",
-        category: "Coding Boot Camp"
-      },
-      {
-        title: "U of H",
-        category: "Houston Pubblic University"
-      },
-      {
-        title: "U.T.",
-        category: "Texas Public University"
-      }
-    ]})
-    
+    fetch('https://jsonplaceholder.typicode.com/todos')
+    .then(res => res.json())
+    .then(data => this.setState({todos:data}, function(){
+      console.log(this.state)
+    }))
   }
 
-  handleAddProject(project){
+  handleAddTodo(todo){
     console.log("what is being sent to us")
-    console.log(project)
+    console.log(todo)
 
-    let projects  = this.state.projects;
-    projects.push(project);
-    this.setState({projects:projects})
+    let todos  = this.state.todos;
+    todos.push(todo);
+    this.setState({todos:todos})
   }
 
   render() {
@@ -46,8 +35,9 @@ class App extends Component {
     
     return (
       <div >
-        <Projects projects={this.state.projects} />
-        <AddProjects addProjects={this.handleAddProject.bind(this)} />
+        
+        <Addtodo addtodo={this.handleAddTodo.bind(this)} />
+        <Todos todos={this.state.todos} />
       </div>
     );
   }

@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
+import { Button } from 'react-bootstrap';
+import { ButtonToolbar} from 'react-bootstrap';
 
 
-class AddProjects extends Component {
+class Addtodo extends Component {
 
     constructor(){
         super();
         this.state = {
-            newProject:{}
+            newTodo:{}
         }
     }
     static defaultProps = {
-        categories: ['Coding Boot Camp', 'Houston Pubblic University', 'Texas Public University']
+        categories: ['Completed', 'Untouched', 'Working On It']
     }
 
     handleSubmit(e){
@@ -24,12 +26,13 @@ class AddProjects extends Component {
         if(this.refs.title.value === ''){
             alert('title is required')
         }else{
-            this.setState({newProject:{
+            this.setState({newTodo:{
+                
                 title: this.refs.title.value,
                 category: this.refs.category.value
             }},  function(){
                 
-                this.props.addProjects(this.state.newProject);
+                this.props.addtodo(this.state.newTodo);
             })
         }
 
@@ -44,12 +47,13 @@ class AddProjects extends Component {
     })
     return (
     <div>
-        <h1>Add Projects</h1>
+        <h1>Add Items To Do To List:
+        </h1>
 
         <form onSubmit={this.handleSubmit.bind(this)}>
            <div>
                <label>Title</label><br />
-               <input type="text" ref="title"/>
+               <input type="text" ref="title" maxlength="80" size="80"/>
           </div>
 
           <div>
@@ -59,11 +63,13 @@ class AddProjects extends Component {
                     {categoryOptions}
                </select>
           </div> 
-          <input type="submit" value="submit"/>
+          <ButtonToolbar>
+          <Button bsStyle="success" type="submit" value="submit">Submit</Button></ButtonToolbar>
+          {/* <input type="submit" value="submit"/> */}
         </form>
      </div>
     );
   }
 }
 
-export default AddProjects
+export default Addtodo
